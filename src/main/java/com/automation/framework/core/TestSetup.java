@@ -13,6 +13,11 @@ public class TestSetup {
 	@AfterScenario
 	public void cleanUp(){
 		SeleniumTestContext.get().getWebdriver().quit();
+		cleanSession();
+	}
+
+	public void cleanSession(){
+		SeleniumTestContext.thread.remove();
 	}
 
 }

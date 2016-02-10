@@ -3,6 +3,7 @@ package com.automation.framework.web;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class WebCommand {
 
@@ -11,10 +12,10 @@ public class WebCommand {
 	public WebCommand(WebDriver driver) {
 		this.driver=driver;
 	}
-	
+
 	public WebElement getWebElement(PageElement pageElement){
 		WebElement webElement=null;
-		
+
 		switch (pageElement.locatorType) {
 		case XPATH:
 			webElement=driver.findElement(By.xpath(pageElement.getValue()));
@@ -22,26 +23,34 @@ public class WebCommand {
 		case ID:
 			webElement=driver.findElement(By.id(pageElement.getValue()));
 			break;
-			
+
 		default:
 			break;
 		}
 		return webElement;
 	}
-	
+
 	public void click(PageElement pageElement){
 		getWebElement(pageElement).click();
 	}
-	
+
 	public void type(PageElement pageElement,String value){
 		getWebElement(pageElement).sendKeys(value);
 	}
-	
+
 	public void goTo(String url){
 		driver.get(url);
 	}
-	
+
 	public void maximizeWindow(){
 		driver.manage().window().maximize();
 	}
+
+	public void selectUsingIndex(PageElement pageElement, int index) {
+		WebElement webElement=getWebElement(pageElement);
+
+		Select select = new Select(webElement);
+		select.selectByIndex(index);
+	}
+
 }
